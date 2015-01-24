@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+  MovieDB Project Build File
+
+  - Docker
+  - Virtualbox
+  - boot2docker
+  - fig
+  - git
+-->
+<project name="moviedb" default="build" basedir=".">
+    
+    <description>MovieDB</description>
+
+    <property name="build.dir"              value="." />
+    
+    <!-- ========================================= -->
+    <!-- Target: Build                             -->
+    <!-- ========================================= -->
+    <target name="build">
+        <exec executable="git">
+            <arg value="submodule" />
+            <arg value="init" />
+        </exec>
+        <exec executable="git">
+            <arg value="submodule" />
+            <arg value="update" />
+        </exec>
+        <exec executable="fig">
+            <arg value="build" />
+        </exec>
+    </target>
+
+
+</project>
