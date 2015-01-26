@@ -1,0 +1,9 @@
+
+server {
+  listen       80;
+  access_log   /var/log/nginx/frontend.log;
+
+  root         /frontend;
+  index        index.php index.html;
+ 
+}

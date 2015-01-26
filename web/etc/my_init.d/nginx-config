@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sudo rm /etc/nginx/sites-enabled/default
+chown -R www-data:www-data /frontend
+
+service nginx start

@@ -1,2 +1,18 @@
+
 web:
   build: ./web/
+  ports:
+    - "80"
+  volumes:
+    - web/frontend:/frontend
+  command:
+    - /sbin/my_init
+
+api:
+  build: ./api/
+  ports:
+    - "80"
+  volumes:
+    - api/app:/api
+  command:
+    - /sbin/my_init

@@ -1,3 +1,6 @@
 [submodule "web/frontend"]
 	path = web/frontend
 	url = git@github.com:brianvoss/moviedb_frontend.git
+[submodule "api/app"]
+	path = api/app
+	url = git@github.com:brianvoss/moviedb_api.git
