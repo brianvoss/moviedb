@@ -1,8 +1,0 @@
-#!/bin/bash
-
-cd /api;
-
-# Install python reqs
-pip install virtualenv django djangorestframework django-filter gunicorn django-cors-headers markdown nginx
-
-#gunicorn api.wsgi -b 0.0.0.0:80
