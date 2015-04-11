@@ -1,18 +1,101 @@
 
-web:
-  build: ./web/
-  ports:
-    - "80"
-  volumes:
-    - web/frontend:/frontend
-  command:
-    - /sbin/my_init
+#web:
+#  build: ./web/
+#  ports:
+#    - "80"
+#  volumes:
+#    - web/frontend:/frontend
+#  command:
+#    - /sbin/my_init
 
-api:
-  build: ./api/
+
+#haproxy:
+#  image: tutum/haproxy:latest
+#  links:
+#    - nginx:web
+#  ports:
+#    - "80"
+#  environment:
+#    - PORT=80                     # The port where the web application backends are listening to.
+#    - MODE=http                   # Mode of load balancing for HAProxy. Possible values include: http, tcp, health.
+#    - BALANCE=roundrobin          # Load balancing algorithm to use. Possible values include: roundrobin, static-rr, source, leastconn.
+#    - MAXCONN=4096                # Sets the maximum per-process number of concurrent connections.
+    #TIMEOUT (default: connect 5000,client 50000,server 50000): Comma-separated list of HAProxy timeout entries to the default section.
+    #OPTION (default: redispatch): Comma-separated list of HAProxy option entries to the default section.
+    #SSL_CERT (default: **None**): An optional certificate to use on the binded port. It should have both the private and public keys content. If set, port 443 will be used to handle HTTPS requests.
+    #VIRTUAL_HOST (default: **None**): Optional. Let HAProxy route by domain name. Format LINK_ALIAS=DOMAIN, comma separated.
+
+#api:
+#  build: ./api/
+#  ports:
+#    - "80"
+#  volumes:
+#    - api/app:/api
+#  command:
+#    - /sbin/my_init
+
+#nginx:
+#  build: ./nginx/
+#  links:
+#    - fpm:fpm
+#  ports:
+#    - "80"
+#  volumes:
+#    - nginx/etc/nginx/sites-enabled/00-php-api:/etc/nginx/sites-enabled/00-php-api
+#  environment:
+#    - NGINX_EXPOSE_PORT=80
+#    - NGINX_DOMAIN_NAME=api.localhost
+#  command:
+#    - /sbin/my_init
+queue:
+  build: ./rabbitmq
   ports:
-    - "80"
+    - "5672"
+    - "15672"
+  command: /sbin/my_init
+
+nginx:
+  build: ./nginx-proxy
+  ports:
+    - "80:80"
+  volumes_from:
+    - dockersocket
+    - nginxsettings
+    - phpapi
+
+fpm:
+  build: ./php-api/
+  expose:
+    - "9000"
+  volumes_from:
+    - fpmsettings
+    - phpapi
+  environment:
+    - VIRTUAL_HOST=php.localdocker
+  command: /sbin/my_init
+  links:
+    - nginx:nginx
+    - queue:queue
+
+
+dockersocket:
+  image: ubuntu:14.04
   volumes:
-    - api/app:/api
-  command:
-    - /sbin/my_init
+    - /var/run/docker.sock:/tmp/docker.sock
+
+nginxsettings:
+  image: ubuntu:14.04
+  volumes:
+    - php-api/etc/nginx/sites-enabled/php-fpm:/etc/nginx/sites-enabled/php-fpm
+
+fpmsettings:
+  image: ubuntu:14.04
+  volumes:
+    - php-api/etc/php5/fpm/pool.d/api0.conf:/etc/php5/fpm/pool.d/api0.conf
+    - php-api/etc/php5/fpm/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
+    - php-api/etc/php5/fpm/php.ini:/etc/php5/fpm/php.ini
+
+phpapi:
+  image: ubuntu:14.04
+  volumes:
+    - php-api/apigility:/var/www/
