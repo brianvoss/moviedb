@@ -1,0 +1,46 @@
+server {
+    listen       80;
+    server_name  localhost;
+
+    root /var/www/public;
+    index index.php index.html;
+
+    # serve static files
+    location ~ ^/(images|javascript|js|css|flash|media|static)/  {
+      root    /var/www/virtual/big.server.com/htdocs;
+      expires 30d;
+    }
+
+    location /ping {
+        fastcgi_pass localhost:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include /etc/nginx/fastcgi_params;
+    }
+
+    location /fpm-status {
+        fastcgi_pass localhost:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include /etc/nginx/fastcgi_params;
+    }
+
+    location @missing {
+        rewrite ^ /error/404 break;
+
+        fastcgi_pass localhost:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+        include /etc/nginx/fastcgi_params;
+    }
+
+    location / {
+        if (-f $request_filename) {
+            break;
+        }
+    
+        try_files $uri $uri/ /index.php;
+
+        fastcgi_pass localhost:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include /etc/nginx/fastcgi_params;
+    }
+
+}

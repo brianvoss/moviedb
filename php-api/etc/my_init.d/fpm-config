@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# FPM ip and port
+#sed -i "s/%socket_uri%/$SOCKET_URI/" /etc/php5/fpm/pool.d/api0.conf
+#sed -i "s/%proxy-port%/$NGINX_PORT_80_TCP_PORT/" /etc/php5/fpm/pool.d/api0.conf
+#sed -i "s/%fpm-port%/$FPM_PORT/" /etc/php5/fpm/pool.d/api0.conf
+
+export COMPOSER_HOME=/var/www/;
+cd /var/www/ && chmod -R 777 module;
+cd /var/www/ && curl -sS https://getcomposer.org/installer | php
+cd /var/www/ && php composer.phar install
+
+service php5-fpm start
