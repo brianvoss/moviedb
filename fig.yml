@@ -98,4 +98,4 @@ fpmsettings:
 phpapi:
   image: ubuntu:14.04
   volumes:
-    - php-api/apigility:/var/www/
+    - php-api/api:/var/www/
