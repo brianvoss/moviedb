@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export COMPOSER_HOME=/var/www/;
+cd /var/www/ && curl -sS https://getcomposer.org/installer | php
+cd /var/www/ && php composer.phar install
