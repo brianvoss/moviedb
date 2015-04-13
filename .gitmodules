@@ -4,3 +4,6 @@
 [submodule "api/app"]
 	path = api/app
 	url = git@github.com:brianvoss/moviedb_api.git
+[submodule "php-api/api"]
+	path = php-api/api
+	url = git@github.com:brianvoss/moviedb_php_api.git
