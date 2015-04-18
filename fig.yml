@@ -60,7 +60,6 @@ nginx:
     - "80:80"
   volumes_from:
     - dockersocket
-    - nginxsettings
     - phpapi
 
 fpm:
