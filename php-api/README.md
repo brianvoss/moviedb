@@ -1,13 +1,12 @@
+# Apigility API Docker image #
 
-# Enable AMQP (RabbitMQ)
+### Enable AMQP (RabbitMQ) ###
 
-php composer.phar require prolic/humus-supervisor-module:dev-master
-php composer.phar require prolic/humus-amqp-module:dev-master
-php composer.phar require --dev prolic/humus-amqp-demo-module:dev-master
+    php composer.phar require prolic/humus-supervisor-module:dev-master
+    php composer.phar require prolic/humus-amqp-module:dev-master
+    php composer.phar require --dev prolic/humus-amqp-demo-module:dev-master
 
-// Add module config
-
-/**
+### Add module config ###
 
     'humus_amqp_module' => array(
         'default_connection' => 'default',
@@ -23,4 +22,3 @@ php composer.phar require --dev prolic/humus-amqp-demo-module:dev-master
         )
     )
 
-**/
