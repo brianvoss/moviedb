@@ -60,7 +60,7 @@ nginxsettings:
 fpmsettings:
   image: ubuntu:14.04
   volumes:
-    - php-api/etc/php5/fpm/pool.d/api0.conf:/etc/php5/fpm/pool.d/api0.conf
+    - php-api/etc/php5/fpm/pool.d/www.conf:/etc/php5/fpm/pool.d/www.conf
     - php-api/etc/php5/fpm/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
     - php-api/etc/php5/fpm/php.ini:/etc/php5/fpm/php.ini
 
