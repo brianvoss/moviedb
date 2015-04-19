@@ -1,9 +1,6 @@
 [submodule "api/app"]
 	path = api/app
 	url = git@github.com:brianvoss/moviedb_api.git
-[submodule "php-api/api"]
-	path = php-api/api
-	url = git@github.com:brianvoss/moviedb_php_api.git
 [submodule "photo-service/app"]
 	path = photo-service/app
 	url = git@github.com:brianvoss/php-rabbitmq-photo-service.git
