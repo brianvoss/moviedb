@@ -1,0 +1,14 @@
+server {
+    listen      80;
+    server_name api.php.local;
+    root        /var/www/public;
+    index       index.php index.html;
+    include     /etc/nginx/mime.types;
+
+    location / {
+      if (-f $request_filename) {
+        break;
+      }
+    }
+
+}
