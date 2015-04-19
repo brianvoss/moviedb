@@ -8,6 +8,12 @@
 export COMPOSER_HOME=/var/www/;
 cd /var/www/ && chmod -R 777 module;
 cd /var/www/ && curl -sS https://getcomposer.org/installer | php
+cd /var/www/ && php composer.phar create-project -sdev zfcampus/zf-apigility-skeleton
 cd /var/www/ && php composer.phar install
+
+mv /var/www/zf-apigility-skeleton/* /var/www/
+rm -rf /var/www/zf-apigility-skeleton
+
+cd /var/www/ && php public/index.php development enable
 
 service php5-fpm start
