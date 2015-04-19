@@ -7,13 +7,25 @@
 
 export COMPOSER_HOME=/var/www/;
 
-cd /var/www/ && curl -sS https://getcomposer.org/installer | php
-cd /var/www/ && php composer.phar create-project -sdev zfcampus/zf-apigility-skeleton
-cd /var/www/ && php composer.phar install
+if [ -d "/var/www/public" ]; then
 
-mv /var/www/zf-apigility-skeleton/* /var/www/
-rm -rf /var/www/zf-apigility-skeleton
+    echo "Skipping Apigility install"
 
-cd /var/www/ && php public/index.php development enable
+else
+
+	cd /var/www/ && curl -sS https://getcomposer.org/installer | php
+	cd /var/www/ && php composer.phar create-project -sdev zfcampus/zf-apigility-skeleton
+	cd /var/www/ && php composer.phar install
+
+	mv /var/www/zf-apigility-skeleton/* /var/www/
+	rm -rf /var/www/zf-apigility-skeleton
+
+	cd /var/www/ && php public/index.php development enable
+
+fi
+
+rm -f /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/php-fpm /etc/nginx/sites-enabled/
 
 service php5-fpm start
+service nginx start
