@@ -1,7 +1,7 @@
 FROM        phusion/baseimage:latest
 MAINTAINER  Brian Voss <brian@brianvoss.com>
 
-RUN apt-get update; apt-get install -y php5-fpm git;
+RUN apt-get update; apt-get install -y php5-fpm nginx git;
 
 # AMQP
 RUN apt-get install -y php5-dev php-pear librabbitmq1 librabbitmq-dev;
