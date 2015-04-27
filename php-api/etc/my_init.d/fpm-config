@@ -21,7 +21,8 @@ else
 	rm -rf /var/www/zf-apigility-skeleton
 
 	cd /var/www/ && php public/index.php development enable
-
+	cd /var/www/ && php composer.phar require --dev zfr/zfr-cors:1.*
+	cp /var/www/vendor/zfr/zfr-cors/config/zfr_cors.global.php.dist /var/www/config/autoload/zfr_cors.global.php
 fi
 
 rm -f /etc/nginx/sites-enabled/default
