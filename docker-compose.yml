@@ -22,6 +22,18 @@
 #    - dockersocket
 #    - phpapi
 
+database:
+  image: mysql:5.5
+  ports:
+    - "3306"
+  environment:
+    - MYSQL_USER="mysql"
+    - MYSQL_ROOT_PASSWORD="password"
+    - MYSQL_DATABASE=moviedb
+  volumes_from:
+    - mysqlsettings
+  command: cat /usr/local/data/schema.sql
+
 queue:
   build: ./rabbitmq
   ports:
@@ -56,6 +68,11 @@ nginxsettings:
   volumes:
     - php-api/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
     - php-api/etc/nginx/sites-available/php-fpm:/etc/nginx/sites-available/php-fpm
+
+mysqlsettings:
+  image: ubuntu:14.04
+  volumes:
+    - mysql/schema.sql:/usr/local/data/schema.sql
 
 fpmsettings:
   image: ubuntu:14.04
